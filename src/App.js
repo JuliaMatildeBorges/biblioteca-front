@@ -1,23 +1,25 @@
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { Home } from "./components/Home.js";
+import { Login } from "./components/Login.js";
+import { Cadastro } from "./components/Cadastro.js";
+import { Inicio } from "./components/Inicio.js";
+import { FazerReserva } from "./components/FazerReserva.js";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/cadastro" element={<Cadastro />} />
+          <Route path="/inicio" element={<Inicio />} />
+          <Route path="/fazer-reserva" element={<FazerReserva />} />
+
+        </Routes>
+
+      </BrowserRouter>
+
     </div>
   );
 }
