@@ -8,7 +8,7 @@ export function Inicio() {
 
   return (
     <div className="min-h-screen bg-gray-100">
-      
+
       <Menu />
 
       <main className="flex flex-col items-center py-16 px-6">
@@ -36,6 +36,8 @@ export function Inicio() {
           >
             Fazer reserva
           </button>
+
+
 
         </div>
       </main>
