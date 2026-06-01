@@ -1,38 +1,22 @@
 // Menu.js
 import { Link } from "react-router-dom";
+import { getUsuarioAtual } from "../services/api";
 
 export function Menu() {
+  const usuario = getUsuarioAtual();
+
   return (
-    <header className="bg-blue-900 shadow-lg">
-      <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-        
-        <h1 className="text-white text-2xl font-bold tracking-wide">
-            Biblioteca SENAI
-        </h1>
+    <header className="topbar">
+      <Link to="/" className="brand">Biblioteca SENAI</Link>
 
-        <nav className="flex gap-6 text-white font-medium">
-          <Link
-            to="/"
-            className="hover:text-blue-200 transition"
-          >
-            Início
-          </Link>
-
-          <Link
-            to="/cadastro"
-            className="hover:text-blue-200 transition"
-          >
-            Cadastro
-          </Link>
-
-          <Link
-            to="/login"
-            className="hover:text-blue-200 transition"
-          >
-            Login
-          </Link>
-        </nav>
-      </div>
+      <nav className="nav">
+        <Link to="/">Início</Link>
+        <Link to="/fazer-reserva">Reservar</Link>
+        <Link to="/inicio">Minhas reservas</Link>
+        {usuario?.perfil === "ADMIN" && <Link to="/inicio-adm">Admin</Link>}
+        {!usuario && <Link to="/cadastro">Cadastro</Link>}
+        <Link to="/login">{usuario ? "Trocar usuário" : "Login"}</Link>
+      </nav>
     </header>
   );
 }

@@ -1,126 +1,86 @@
 import { useNavigate } from "react-router-dom";
 import { Menu } from "./Menu"
-import { useState, useEfect } from "react";
+import { useState } from "react";
+import { api, setUsuarioAtual } from "../services/api";
 
 export function Login() {
-
-
     const navigate = useNavigate();
     const [email, setEmail] = useState("");
     const [senha, setSenha] = useState("");
+    const [mensagem, setMensagem] = useState("");
 
     async function fazerLogin(e) {
-
         e.preventDefault();
+        setMensagem("");
 
         try {
+            // Login simples para o estágio atual do projeto: busca o cadastro
+            // existente e mantém o usuário no navegador.
+            const usuarios = await api.get("/usuario");
+            const usuario = usuarios.find((item) => item.email === email && item.senha === senha);
+            if (!usuario) throw new Error("E-mail ou senha inválidos.");
 
-            const resposta = await fetch(
-                "http://localhost:8080/auth/login",
-                {
-                    method: "POST",
-
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-
-                    body: JSON.stringify({
-                        email: email,
-                        senha: senha
-                    })
-                }
-            );
-
-            if (!resposta.ok) {
-                throw new Error("Erro no login");
-            }
-
-            const dados = await resposta.json();
-
-            console.log(dados);
-
-            alert("Login realizado!");
-            navigate('/inicio')
-
+            setUsuarioAtual(usuario);
+            navigate(usuario.perfil === "ADMIN" ? "/inicio-adm" : "/inicio");
         } catch (erro) {
-
-            console.log(erro);
-
-            alert("Erro na conexão com o sistema");
-
+            setMensagem(erro.message);
         }
     }
 
 
     return (
-        <div className="min-h-screen bg-gray-100">
+        <div>
             <Menu />
 
-            <main className="flex items-center justify-center py-20 px-4">
-                <div className="bg-white w-full max-w-md rounded-2xl shadow-xl p-10 border-t-8 border-blue-900">
+            <main className="page narrow">
+                <section className="panel">
 
-                    <h1 className="text-4xl font-bold text-blue-900 mb-2">
-                        Login
-                    </h1>
+                    <h1>Login</h1>
 
-                    <p className="text-gray-600 mb-8">
+                    <p className="muted">
                         Entre com seu e-mail e senha para acessar o sistema.
                     </p>
 
-                    <form className="space-y-6">
-
-                        {/* Email */}
-                        <div>
-                            <label className="block text-gray-700 font-semibold mb-2">
-                                E-mail
-                            </label>
-
+                    <form className="form" onSubmit={fazerLogin}>
+                        <label>
+                            E-mail
                             <input
                                 type="email"
+                                value={email}
                                 placeholder="Digite seu e-mail"
-                                className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-800"
                                 onChange={(e) => setEmail(e.target.value)}
+                                required
                             />
-                        </div>
+                        </label>
 
-                        {/* Senha */}
-                        <div>
-                            <label className="block text-gray-700 font-semibold mb-2">
-                                Senha
-                            </label>
-
+                        <label>
+                            Senha
                             <input
                                 type="password"
+                                value={senha}
                                 placeholder="Digite sua senha"
-                                className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-800"
-                                 onChange={(e) => setSenha(e.target.value)}
+                                onChange={(e) => setSenha(e.target.value)}
+                                required
                             />
-                        </div>
+                        </label>
 
-                        {/* Botão */}
-                        <button
-                            onClick={fazerLogin}
-                            className="w-full bg-blue-900 hover:bg-blue-950 transition text-white py-3 rounded-lg font-bold text-lg shadow-md"
+                        {mensagem && <p className="alert">{mensagem}</p>}
 
-                        >
+                        <button type="submit" className="button primary full">
                             Entrar
                         </button>
                     </form>
 
-                    {/* Cadastro */}
-                    <div className="mt-6 text-center">
-                        <p className="text-gray-600">
+                    <div className="center-note">
+                        <p>
                             Não possui conta?
                         </p>
 
-                        <a
-                            href="/cadastro"
-                            className="text-blue-900 font-semibold hover:underline"
-                        >
+                        <a href="/cadastro">
                             Criar cadastro
                         </a>
                     </div>
-                </div>
+                </section>
             </main>
         </div>
     );

@@ -1,46 +1,107 @@
-// Dashboard.js
+import { useCallback, useEffect, useState } from "react";
 import { Menu } from "./Menu";
 import { useNavigate } from "react-router-dom";
+import { api, getUsuarioAtual } from "../services/api";
 
 export function Inicio() {
-
   const navigate = useNavigate();
+  const usuario = getUsuarioAtual();
+  const [reservas, setReservas] = useState([]);
+  const [mensagem, setMensagem] = useState("");
+
+  const carregarReservas = useCallback(async () => {
+    try {
+      const dados = await api.get(`/reservas/usuario/${usuario.id}`);
+      setReservas(dados);
+    } catch (error) {
+      setMensagem(error.message);
+    }
+  }, [usuario]);
+
+  useEffect(() => {
+    if (!usuario) {
+      navigate("/login");
+      return;
+    }
+    carregarReservas();
+  }, [carregarReservas, navigate, usuario]);
+
+  async function atualizarStatus(id, acao) {
+    try {
+      await api.patch(`/reservas/${id}/${acao}`);
+      await carregarReservas();
+    } catch (error) {
+      setMensagem(error.message);
+    }
+  }
 
   return (
-    <div className="min-h-screen bg-gray-100">
-
+    <div>
       <Menu />
 
-      <main className="flex flex-col items-center py-16 px-6">
-
-        {/* Boas-vindas */}
-        <h1 className="text-3xl font-bold text-blue-900 mb-16">
-          Bem-vindo, usuário
-        </h1>
-
-        {/* Botões */}
-        <div className="flex flex-col md:flex-row gap-10">
-
-          {/* Reservas */}
-          <button
-            onClick={() => navigate("/minhas-reservas")}
-            className="w-82 h-102 bg-blue-900 hover:bg-blue-950 transition rounded-3xl shadow-xl text-white text-2xl font-semibold flex items-center justify-center text-center px-15"
-          >
-            Ver minhas reservas
+      <main className="page">
+        <div className="page-header">
+          <div>
+            <p className="eyebrow">Área do usuário</p>
+            <h1>Minhas reservas</h1>
+            <p className="muted">Acompanhe seus horários e registre check-in ou checkout.</p>
+          </div>
+          <button onClick={() => navigate("/fazer-reserva")} className="button primary">
+            Nova reserva
           </button>
-
-          {/* Fazer Reserva */}
-          <button
-            onClick={() => navigate("/fazer-reserva")}
-            className="w-82 h-102 bg-white border-4 border-blue-900 hover:bg-blue-100 transition rounded-3xl shadow-xl text-blue-900 text-2xl font-semibold flex items-center justify-center text-center px-6"
-          >
-            Fazer reserva
-          </button>
-
-
-
         </div>
+
+        {mensagem && <p className="alert">{mensagem}</p>}
+
+        <section className="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Espaço</th>
+                <th>Curso</th>
+                <th>Alunos</th>
+                <th>Início</th>
+                <th>Fim</th>
+                <th>Status</th>
+                <th>Ações</th>
+              </tr>
+            </thead>
+            <tbody>
+              {reservas.map((reserva) => (
+                <tr key={reserva.id}>
+                  <td>{reserva.espacoNome}</td>
+                  <td>{reserva.curso}</td>
+                  <td>{reserva.quantidadeAlunos}</td>
+                  <td>{formatarData(reserva.inicio)}</td>
+                  <td>{formatarData(reserva.fim)}</td>
+                  <td><span className="badge">{reserva.status}</span></td>
+                  <td className="row-actions">
+                    <button className="button compact" onClick={() => atualizarStatus(reserva.id, "checkin")}>
+                      Check-in
+                    </button>
+                    <button className="button compact secondary" onClick={() => atualizarStatus(reserva.id, "checkout")}>
+                      Checkout
+                    </button>
+                  </td>
+                </tr>
+              ))}
+
+              {reservas.length === 0 && (
+                <tr>
+                  <td colSpan="7" className="empty">Nenhuma reserva encontrada.</td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </section>
       </main>
     </div>
   );
+}
+
+function formatarData(valor) {
+  return new Intl.DateTimeFormat("pt-BR", {
+    dateStyle: "short",
+    timeStyle: "short",
+  }).format(new Date(valor));
 }

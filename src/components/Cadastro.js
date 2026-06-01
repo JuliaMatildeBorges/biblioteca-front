@@ -1,103 +1,139 @@
 // Cadastro.js
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Menu } from "./Menu";
+import { api, setUsuarioAtual } from "../services/api";
 
 export function Cadastro() {
+  const navigate = useNavigate();
+  const [mensagem, setMensagem] = useState("");
+  const [form, setForm] = useState({
+    nome: "",
+    email: "",
+    telefone: "",
+    senha: "",
+    cpf: "",
+    instituicao: "SENAI",
+    tipo: "ALUNO",
+  });
+
+  function alterarCampo(event) {
+    setForm({ ...form, [event.target.name]: event.target.value });
+  }
+
+  async function cadastrar(event) {
+    event.preventDefault();
+    setMensagem("");
+
+    try {
+      const usuario = await api.post("/usuario", form);
+      setUsuarioAtual(usuario);
+      navigate("/inicio");
+    } catch (error) {
+      setMensagem(error.message);
+    }
+  }
+
   return (
-    <div className="min-h-screen bg-gray-100">
+    <div>
       <Menu />
 
-      <main className="flex items-center justify-center py-16 px-4">
-        <div className="bg-white w-full max-w-2xl rounded-2xl shadow-xl p-10 border-t-8 border-blue-900">
-          
-          <h1 className="text-4xl font-bold text-blue-900 mb-2">
-            Cadastro
-          </h1>
+      <main className="page narrow">
+        <section className="panel">
+          <h1>Cadastro</h1>
 
-          <p className="text-gray-600 mb-8">
+          <p className="muted">
             Preencha as informações abaixo para criar sua conta.
           </p>
 
-          <form className="space-y-6">
-            
-            {/* Nome */}
-            <div>
-              <label className="block text-gray-700 font-semibold mb-2">
-                Nome Completo
-              </label>
-
+          <form className="form" onSubmit={cadastrar}>
+            <label>
+              Nome completo
               <input
+                name="nome"
                 type="text"
+                value={form.nome}
+                onChange={alterarCampo}
                 placeholder="Digite seu nome"
-                className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-800"
+                required
               />
-            </div>
+            </label>
 
-            {/* CPF */}
-            <div>
-              <label className="block text-gray-700 font-semibold mb-2">
+            <div className="form-grid">
+              <label>
                 CPF
+                <input
+                  name="cpf"
+                  type="text"
+                  value={form.cpf}
+                  onChange={alterarCampo}
+                  placeholder="000.000.000-00"
+                  required
+                />
               </label>
-
-              <input
-                type="text"
-                placeholder="000.000.000-00"
-                className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-800"
-              />
+              <label>
+                Telefone
+                <input
+                  name="telefone"
+                  type="tel"
+                  value={form.telefone}
+                  onChange={alterarCampo}
+                  placeholder="(00) 00000-0000"
+                  required
+                />
+              </label>
             </div>
 
-            {/* Email */}
-            <div>
-              <label className="block text-gray-700 font-semibold mb-2">
-                E-mail
-              </label>
-
+            <label>
+              E-mail
               <input
+                name="email"
                 type="email"
+                value={form.email}
+                onChange={alterarCampo}
                 placeholder="Digite seu e-mail"
-                className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-800"
+                required
               />
-            </div>
+            </label>
 
-            {/* Senha */}
-            <div>
-              <label className="block text-gray-700 font-semibold mb-2">
-                Senha
-              </label>
-
+            <label>
+              Senha
               <input
+                name="senha"
                 type="password"
+                value={form.senha}
+                onChange={alterarCampo}
                 placeholder="Digite sua senha"
-                className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-800"
+                required
               />
-            </div>
+            </label>
 
-            {/* Tipo de Usuário */}
-            <div>
-              <label className="block text-gray-700 font-semibold mb-2">
-                Tipo de Usuário
+            <div className="form-grid">
+              <label>
+                Instituição
+                <select name="instituicao" value={form.instituicao} onChange={alterarCampo}>
+                  <option value="SENAI">SENAI</option>
+                  <option value="SESI">SESI</option>
+                </select>
               </label>
 
-              <select
-                className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-800"
-              >
-                <option>Selecione</option>
-                <option>Responsável</option>
-                <option>Professor</option>
-                <option>Aluno</option>
-                <option>Visitante</option>
-                <option>Externo</option>
-              </select>
+              <label>
+                Tipo
+                <select name="tipo" value={form.tipo} onChange={alterarCampo}>
+                  <option value="ALUNO">Aluno</option>
+                  <option value="COLABORADOR">Colaborador</option>
+                  <option value="TERCEIROS">Terceiros</option>
+                </select>
+              </label>
             </div>
 
-            {/* Botão */}
-            <button
-              type="submit"
-              className="w-full bg-blue-900 hover:bg-blue-950 transition text-white py-3 rounded-lg font-bold text-lg shadow-md"
-            >
+            {mensagem && <p className="alert">{mensagem}</p>}
+
+            <button type="submit" className="button primary full">
               Cadastrar
             </button>
           </form>
-        </div>
+        </section>
       </main>
     </div>
   );
