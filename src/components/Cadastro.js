@@ -7,6 +7,7 @@ import { api, setUsuarioAtual } from "../services/api";
 export function Cadastro() {
   const navigate = useNavigate();
   const [mensagem, setMensagem] = useState("");
+  const API_URL = process.env.REACT_APP_API_URL || "http://localhost:8080";
   const [form, setForm] = useState({
     nome: "",
     email: "",
@@ -26,12 +27,24 @@ export function Cadastro() {
     setMensagem("");
 
     try {
-      const usuario = await api.post("/usuario", form);
+      const response = await fetch(`${API_URL}/usuario`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+
+      });
+
+      if (!response.ok) {
+        const error = await response.json().catch(() => ({}));
+        throw new Error(error.mensagem || "Não foi possível concluir a operação.");
+      }
+      const usuario = await response.json();
       setUsuarioAtual(usuario);
       navigate("/inicio");
     } catch (error) {
       setMensagem(error.message);
     }
+
   }
 
   return (
