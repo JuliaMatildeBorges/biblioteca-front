@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Building2, Eye, EyeOff, Loader2, CheckCircle2 } from "lucide-react";
+import { Eye, EyeOff, Loader2, CheckCircle2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import Logo from "../assets/logo.png";
 
@@ -301,7 +301,7 @@ export function Cadastro() {
           {/* Cabeçalho com espaço para logo */}
           <div className="flex flex-col items-center mb-8">
             <div className="w-20 h-20 rounded-xl bg-white border-2 border-dashed border-blue-200 flex items-center justify-center mb-4">
-              <img srg={Logo} className="w-8 h-8 text-blue-300" strokeWidth={1.5} />
+              <img src={Logo} alt="Logo SENAI/SESI" className="w-12 h-12 object-contain" />
               {/* Substitua este bloco pela tag <img src="..." /> da logo */}
             </div>
             <h1 className="text-2xl font-semibold text-slate-900 tracking-tight">
@@ -331,7 +331,7 @@ export function Cadastro() {
               )}
 
               {/* Nome */}
-              <Campo label="Nome completo" erro={erros.nome} obrigatorio>
+              <Campo label="Nome completo" erro={erros.nome}>
                 <input
                   type="text"
                   value={form.nome}
@@ -344,7 +344,7 @@ export function Cadastro() {
 
               {/* Email e Telefone */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                <Campo label="Email" erro={erros.email} obrigatorio>
+                <Campo label="Email" erro={erros.email}>
                   <input
                     type="email"
                     value={form.email}
@@ -355,7 +355,7 @@ export function Cadastro() {
                   />
                 </Campo>
 
-                <Campo label="Telefone" erro={erros.telefone} obrigatorio>
+                <Campo label="Telefone" erro={erros.telefone}>
                   <input
                     type="tel"
                     value={form.telefone}
@@ -370,7 +370,7 @@ export function Cadastro() {
               </div>
 
               {/* CPF */}
-              <Campo label="CPF" erro={erros.cpf} obrigatorio>
+              <Campo label="CPF" erro={erros.cpf}>
                 <input
                   type="text"
                   value={form.cpf}
@@ -383,7 +383,7 @@ export function Cadastro() {
 
               {/* Instituição e Tipo */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                <Campo label="Instituição" erro={erros.instituicao} obrigatorio>
+                <Campo label="Instituição" erro={erros.instituicao}>
                   <select
                     value={form.instituicao}
                     onChange={(e) => atualizarCampo("instituicao", e.target.value)}
@@ -398,7 +398,7 @@ export function Cadastro() {
                   </select>
                 </Campo>
 
-                <Campo label="Tipo de usuário" erro={erros.tipo} obrigatorio>
+                <Campo label="Tipo de usuário" erro={erros.tipo}>
                   <select
                     value={form.tipo}
                     onChange={(e) => atualizarCampo("tipo", e.target.value)}
@@ -418,7 +418,7 @@ export function Cadastro() {
 
               {/* Senha e Confirmar senha */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                <Campo label="Senha" erro={erros.senha} obrigatorio>
+                <Campo label="Senha" erro={erros.senha}>
                   <div className="relative">
                     <input
                       type={mostrarSenha ? "text" : "password"}
@@ -444,7 +444,7 @@ export function Cadastro() {
                   </div>
                 </Campo>
 
-                <Campo label="Confirmar senha" erro={erros.confirmarSenha} obrigatorio>
+                <Campo label="Confirmar senha" erro={erros.confirmarSenha}>
                   <div className="relative">
                     <input
                       type={mostrarConfirmarSenha ? "text" : "password"}

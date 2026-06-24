@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Building2, Eye, EyeOff, Loader2 } from "lucide-react";
+import { Eye, EyeOff, Loader2 } from "lucide-react";
+import Logo from "../assets/logo.png";
 
 const API_URL = process.env.REACT_APP_API_URL;
 
@@ -90,7 +91,9 @@ export function Login() {
       localStorage.setItem("token", dados.token);
 
       const usuarioAtual = {
-        email: email.trim(),
+        id: dados.id,
+        nome: dados.nome,
+        email: dados.email || email.trim(),
         perfil: dados.tipo,
       };
       localStorage.setItem("usuarioAtual", JSON.stringify(usuarioAtual));
@@ -116,8 +119,7 @@ export function Login() {
           {/* Cabeçalho com espaço para logo */}
           <div className="flex flex-col items-center mb-8">
             <div className="w-20 h-20 rounded-xl bg-white border-2 border-dashed border-blue-200 flex items-center justify-center mb-4">
-              <img src="../public/logo.png"/>
-              {/* Substitua este bloco pela tag <img src="..." /> da logo */}
+              <img src={Logo} alt="Logo SENAI/SESI" className="w-12 h-12 object-contain" />
             </div>
             <h1 className="text-2xl font-semibold text-slate-900 tracking-tight">
               Biblioteca SENAI / SESI

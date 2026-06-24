@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { Menu } from "./Menu";
 import { useNavigate } from "react-router-dom";
 import { api, getUsuarioAtual } from "../services/api";
@@ -24,7 +24,7 @@ function estiloStatus(status) {
 
 export function Inicio() {
   const navigate = useNavigate();
-  const usuario = getUsuarioAtual();
+  const usuario = useMemo(() => getUsuarioAtual(), []);
   const [reservas, setReservas] = useState([]);
   const [carregando, setCarregando] = useState(true);
   const [mensagemErro, setMensagemErro] = useState("");
