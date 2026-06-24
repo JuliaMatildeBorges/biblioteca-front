@@ -5,7 +5,6 @@ import { Inicio } from "./components/Inicio.js";
 import { FazerReserva } from "./components/FazerReserva.js";
 import { InicioADM } from "./components/adm/InicioADM.js";
 import { getUsuarioAtual } from "./services/api.js";
-import "./App.css";
 
 function rotaInicial(usuario) {
   if (!usuario) return "/login";
