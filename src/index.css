@@ -1,4 +1,340 @@
-body {
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    @apply box-border;
+  }
+
+  body {
+    @apply m-0 bg-biblioteca-bg text-biblioteca-text font-sans antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  a {
+    @apply text-inherit no-underline;
+  }
+
+  label {
+    @apply grid gap-2 text-sm font-bold text-slate-700;
+  }
+
+  input,
+  select,
+  textarea {
+    @apply min-h-11 w-full rounded-lg border border-slate-300 bg-white px-3 py-2.5 font-sans text-biblioteca-text;
+  }
+
+  textarea {
+    @apply resize-y;
+  }
+
+  table {
+    @apply w-full min-w-[820px] border-collapse;
+  }
+
+  th,
+  td {
+    @apply border-b border-biblioteca-line px-3 py-3.5 text-left align-middle;
+  }
+
+  th {
+    @apply text-xs uppercase text-biblioteca-muted;
+  }
+}
+
+@layer components {
+  .app {
+    @apply min-h-screen;
+  }
+
+  .page {
+    @apply mx-auto w-full max-w-[1180px] p-10 max-[760px]:px-5;
+  }
+
+  .page.narrow {
+    @apply max-w-[760px];
+  }
+
+  .page-header {
+    @apply mb-6 flex items-end justify-between gap-6 max-[760px]:flex-col max-[760px]:items-start;
+  }
+
+  .eyebrow {
+    @apply mb-2.5 text-sm font-extrabold uppercase text-biblioteca-success;
+  }
+
+  .muted {
+    @apply mt-0 leading-normal text-biblioteca-muted;
+  }
+
+  .panel,
+  .table-wrap {
+    @apply rounded-lg border border-biblioteca-line bg-white p-7 shadow-biblioteca max-[760px]:p-5;
+  }
+
+  .form {
+    @apply grid gap-4;
+  }
+
+  .form-grid {
+    @apply grid grid-cols-2 gap-4 max-[760px]:grid-cols-1;
+  }
+
+  .form-grid.three {
+    @apply grid-cols-3 max-[760px]:grid-cols-1;
+  }
+
+  .actions,
+  .row-actions,
+  .toolbar {
+    @apply flex flex-wrap items-center gap-3;
+  }
+
+  .button {
+    @apply inline-flex min-h-11 cursor-pointer items-center justify-center gap-2 rounded-lg border border-biblioteca-primary px-[18px] font-extrabold disabled:cursor-not-allowed disabled:opacity-60;
+  }
+
+  .button.primary {
+    @apply bg-biblioteca-primary text-white hover:bg-biblioteca-primaryDark;
+  }
+
+  .button.secondary,
+  .button.compact {
+    @apply bg-white text-biblioteca-primary;
+  }
+
+  .button.compact {
+    @apply min-h-9 px-3 text-sm;
+  }
+
+  .button.danger {
+    @apply border-biblioteca-danger text-biblioteca-danger;
+  }
+
+  .button.full {
+    @apply w-full;
+  }
+
+  .alert,
+  .success {
+    @apply my-4 rounded-lg px-3.5 py-3 font-bold;
+  }
+
+  .alert {
+    @apply bg-red-50 text-biblioteca-danger;
+  }
+
+  .success {
+    @apply bg-emerald-50 text-biblioteca-success;
+  }
+
+  .center-note {
+    @apply mt-[18px] text-center text-biblioteca-muted;
+  }
+
+  .center-note a {
+    @apply font-extrabold text-biblioteca-primary;
+  }
+
+  .dashboard-grid {
+    @apply mb-6 grid grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] gap-[22px] max-[760px]:grid-cols-1;
+  }
+
+  .resource-list {
+    @apply grid gap-3;
+  }
+
+  .resource-item {
+    @apply flex items-center justify-between rounded-lg border border-biblioteca-line p-3.5;
+  }
+
+  .resource-item div {
+    @apply grid gap-1;
+  }
+
+  .resource-item span,
+  .slot span {
+    @apply text-sm text-biblioteca-muted;
+  }
+
+  .table-wrap {
+    @apply overflow-x-auto;
+  }
+
+  .badge {
+    @apply inline-flex rounded-full bg-slate-200 px-2.5 py-1.5 text-xs font-extrabold text-biblioteca-primaryDark;
+  }
+
+  .empty {
+    @apply p-[18px] text-center text-biblioteca-muted;
+  }
+
+  .reserva-page {
+    @apply min-h-screen bg-biblioteca-bg;
+  }
+
+  .reserva-shell {
+    @apply mx-auto max-w-[1180px] px-7 pb-12 pt-9 max-[760px]:px-4 max-[760px]:pb-9 max-[760px]:pt-6;
+  }
+
+  .reserva-header {
+    @apply mb-[22px] flex items-end justify-between max-[760px]:flex-col max-[760px]:items-start;
+  }
+
+  .reserva-header h1 {
+    @apply mb-3 text-[clamp(30px,4vw,44px)] leading-none;
+  }
+
+  .reserva-header .muted {
+    @apply max-w-[760px];
+  }
+
+  .reserva-feedback {
+    @apply flex items-center gap-2;
+  }
+
+  .reserva-flow {
+    @apply grid grid-cols-[minmax(0,1.35fr)_minmax(320px,0.65fr)] items-start gap-[22px] max-[760px]:grid-cols-1;
+  }
+
+  .reserva-main {
+    @apply grid gap-[18px];
+  }
+
+  .reserva-panel {
+    @apply rounded-lg border border-biblioteca-line bg-white p-6 shadow-reserva max-[760px]:p-[18px];
+  }
+
+  .reserva-side {
+    @apply sticky top-24 max-[760px]:static;
+  }
+
+  .section-title {
+    @apply mb-[18px] flex items-start gap-3;
+  }
+
+  .section-title h2 {
+    @apply mb-1 text-lg leading-tight;
+  }
+
+  .section-title p {
+    @apply m-0 text-sm leading-snug text-biblioteca-muted;
+  }
+
+  .step-badge {
+    @apply inline-flex h-[34px] flex-[0_0_34px] items-center justify-center rounded-lg border border-blue-100 bg-blue-50 font-black text-biblioteca-primary;
+  }
+
+  .calendar-toolbar {
+    @apply mb-3.5 flex items-center justify-between border-b border-biblioteca-line pb-3.5 capitalize;
+  }
+
+  .icon-button {
+    @apply inline-flex h-[38px] w-[38px] cursor-pointer items-center justify-center rounded-lg border border-biblioteca-line bg-slate-50 text-biblioteca-primary disabled:cursor-not-allowed disabled:text-slate-400 disabled:opacity-70;
+  }
+
+  .two-week-calendar {
+    @apply grid grid-cols-7 gap-2.5 max-[760px]:grid-cols-2;
+  }
+
+  .calendar-day {
+    @apply grid min-h-[78px] cursor-pointer gap-1.5 rounded-lg border border-biblioteca-line bg-slate-50 px-1.5 py-2.5 text-center text-slate-700 disabled:cursor-not-allowed disabled:text-slate-400 disabled:opacity-50 max-[760px]:min-h-[68px];
+  }
+
+  .calendar-day span {
+    @apply text-xs font-extrabold uppercase text-biblioteca-muted;
+  }
+
+  .calendar-day strong {
+    @apply text-2xl leading-none;
+  }
+
+  .calendar-day.today {
+    @apply border-blue-300;
+  }
+
+  .calendar-day.selected {
+    @apply border-biblioteca-primary bg-biblioteca-primary text-white;
+  }
+
+  .calendar-day.selected span {
+    @apply text-blue-100;
+  }
+
+  .duration-toggle {
+    @apply grid grid-cols-2 gap-1.5 rounded-lg border border-slate-300 bg-slate-100 p-1.5;
+  }
+
+  .duration-toggle button {
+    @apply inline-flex min-h-11 cursor-pointer items-center justify-center gap-2 rounded-lg border border-transparent bg-transparent font-black text-slate-600;
+  }
+
+  .duration-toggle button.active {
+    @apply border-slate-300 bg-white text-biblioteca-primary shadow-reserva;
+  }
+
+  .time-slots {
+    @apply grid grid-cols-[repeat(auto-fill,minmax(150px,1fr))] gap-2.5;
+  }
+
+  .time-slots button,
+  .space-options button {
+    @apply cursor-pointer rounded-lg border border-biblioteca-line bg-white text-left text-biblioteca-text transition hover:border-blue-300 hover:shadow-reserva;
+  }
+
+  .time-slots button {
+    @apply grid min-h-[74px] gap-2 p-[13px];
+  }
+
+  .time-slots button span {
+    @apply text-sm font-bold text-biblioteca-muted;
+  }
+
+  .time-slots button.selected,
+  .space-options button.selected {
+    @apply border-biblioteca-primary bg-blue-50;
+  }
+
+  .loading-state,
+  .empty-state {
+    @apply grid min-h-[150px] place-items-center gap-2.5 text-center text-biblioteca-muted;
+  }
+
+  .empty-state.compact {
+    @apply min-h-[120px] rounded-lg border border-dashed border-slate-300 bg-slate-50 p-[18px];
+  }
+
+  .spin {
+    @apply animate-spin;
+  }
+
+  .selected-time {
+    @apply mb-3.5 flex items-center gap-2 rounded-lg border border-biblioteca-line bg-slate-50 p-3 font-black text-biblioteca-primaryDark;
+  }
+
+  .space-options {
+    @apply mb-[18px] grid gap-2.5;
+  }
+
+  .space-options button {
+    @apply flex min-h-[62px] items-center gap-3 p-3;
+  }
+
+  .space-options span {
+    @apply grid gap-1;
+  }
+
+  .space-options small {
+    @apply text-xs font-extrabold text-biblioteca-muted;
+  }
+
+  .reservation-details {
+    @apply my-[18px] grid gap-4;
+  }
+
+  .field-hint {
+    @apply inline-flex items-center gap-1.5 text-xs font-bold text-biblioteca-muted;
+  }
 }
