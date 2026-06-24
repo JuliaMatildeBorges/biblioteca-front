@@ -260,72 +260,72 @@ export function Cadastro() {
 
   if (sucesso) {
     return (
-      <div className="min-h-screen bg-slate-50 flex items-center justify-center p-4">
-        <div className="bg-white rounded-2xl shadow-xl shadow-slate-200/60 max-w-md w-full p-10 text-center border border-slate-100">
-          <div className="mx-auto w-16 h-16 rounded-full bg-blue-50 flex items-center justify-center mb-6">
-            <CheckCircle2 className="w-9 h-9 text-blue-600" strokeWidth={1.75} />
+      <div className="institutional-page flex items-center justify-center p-4">
+        <div className="auth-card max-w-md w-full p-10 text-center">
+          <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-blue-50">
+            <CheckCircle2 className="h-9 w-9 text-biblioteca-primary" strokeWidth={1.75} />
           </div>
-          <h2 className="text-xl font-semibold text-slate-900 mb-2">
+          <h2 className="mb-2 text-xl font-extrabold text-biblioteca-primaryDark">
             Cadastro realizado
           </h2>
-          <p className="text-slate-500 text-sm leading-relaxed mb-8">
+          <p className="mb-8 text-sm leading-relaxed text-biblioteca-muted">
             Sua conta foi criada com sucesso. Agora você já pode acessar o
             sistema de agendamento de salas e computadores da biblioteca.
           </p>
-          <div className="flex grid gap-4">
-          <button
-            onClick={() => setSucesso(false)}
-            className="w-full bg-blue-700 hover:bg-blue-800 text-white font-medium py-3 rounded-lg transition-colors"
-          >
-            Cadastrar outro usuário
-          </button>
+          <div className="grid gap-4">
+            <button
+              onClick={() => setSucesso(false)}
+              className="button primary full"
+            >
+              Cadastrar outro usuário
+            </button>
 
-          <button 
-           className="w-full bg-blue-700 hover:bg-blue-800 text-white font-medium py-3 rounded-lg transition-colors"
-           onClick={irParaLogin}>
-           Fazer Login
-          </button>
-              </div>
+            <button
+              className="button primary full"
+              onClick={irParaLogin}
+            >
+              Fazer Login
+            </button>
+          </div>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-slate-50 flex flex-col">
+    <div className="institutional-page">
       {/* Faixa institucional */}
-      <div className="h-1.5 w-full bg-gradient-to-r from-blue-700 via-blue-600 to-red-600" />
+      <div className="brand-strip" />
 
-      <div className="flex-1 flex items-center justify-center px-4 py-10">
-        <div className="w-full max-w-2xl">
+      <div className="auth-shell">
+        <div className="auth-container register">
           {/* Cabeçalho com espaço para logo */}
-          <div className="flex flex-col items-center mb-8">
-            <div className="w-20 h-20 rounded-xl bg-white border-2 border-dashed border-blue-200 flex items-center justify-center mb-4">
-              <img src={Logo} alt="Logo SENAI/SESI" className="w-12 h-12 object-contain" />
-              {/* Substitua este bloco pela tag <img src="..." /> da logo */}
+          <div className="brand-header">
+            <div className="brand-mark">
+              <img src={Logo} alt="Logo SENAI/SESI" className="brand-logo" />
             </div>
-            <h1 className="text-2xl font-semibold text-slate-900 tracking-tight">
+            <h1 className="brand-title">
               Biblioteca SENAI / SESI
             </h1>
-            <p className="text-slate-500 text-sm mt-1">
+            <p className="brand-subtitle">
               Agendamento de salas e computadores
             </p>
           </div>
 
           {/* Card do formulário */}
-          <div className="bg-white rounded-2xl shadow-xl shadow-slate-200/60 border border-slate-100 overflow-hidden">
-            <div className="bg-blue-700 px-8 py-6">
-              <h2 className="text-white font-semibold text-lg">
+          <div className="auth-card">
+            <div className="auth-card-header">
+              <h2>
                 Criar nova conta
               </h2>
-              <p className="text-blue-100 text-sm mt-0.5">
+              <p>
                 Preencha os dados abaixo para se cadastrar
               </p>
             </div>
 
-            <form onSubmit={handleSubmit} className="p-8 space-y-5">
+            <form onSubmit={handleSubmit} className="auth-form">
               {erroServidor && (
-                <div className="bg-red-50 border border-red-200 text-red-700 text-sm rounded-lg px-4 py-3">
+                <div className="alert">
                   {erroServidor}
                 </div>
               )}
@@ -478,7 +478,7 @@ export function Cadastro() {
               <button
                 type="submit"
                 disabled={enviando}
-                className="w-full bg-blue-700 hover:bg-blue-800 disabled:bg-blue-300 disabled:cursor-not-allowed text-white font-medium py-3 rounded-lg transition-colors flex items-center justify-center gap-2 mt-2"
+                className="button primary full mt-2"
               >
                 {enviando ? (
                   <>
@@ -492,14 +492,14 @@ export function Cadastro() {
 
               <p className="text-center text-sm text-slate-500 pt-1">
                 Já possui uma conta?{" "}
-                <a href="/login" className="text-blue-700 font-medium hover:underline">
+                <a href="/login" className="font-extrabold text-biblioteca-primary hover:underline">
                   Entrar
                 </a>
               </p>
             </form>
           </div>
 
-          <p className="text-center text-xs text-slate-400 mt-6">
+          <p className="auth-footer">
             © {new Date().getFullYear()} Biblioteca SENAI/SESI — Todos os direitos reservados
           </p>
         </div>
@@ -524,9 +524,9 @@ function Campo({ label, erro, obrigatorio, children }) {
 function inputClasse(erro) {
   return [
     "w-full rounded-lg border px-3.5 py-2.5 text-sm text-slate-900 placeholder:text-slate-400",
-    "focus:outline-none focus:ring-2 focus:ring-blue-500/30 transition-shadow",
+    "focus:outline-none focus:ring-2 focus:ring-biblioteca-primary/25 transition-shadow",
     erro
       ? "border-red-300 focus:border-red-400"
-      : "border-slate-200 focus:border-blue-400",
+      : "border-biblioteca-line focus:border-biblioteca-primary",
   ].join(" ");
 }
