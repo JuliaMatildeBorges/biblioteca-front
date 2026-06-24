@@ -1,5 +1,6 @@
 import { useNavigate, useLocation } from "react-router-dom";
-import { Building2, LogOut, Menu as MenuIcon, X } from "lucide-react";
+import { LogOut, Menu as MenuIcon, X } from "lucide-react";
+import Logo from "../assets/logo.png";
 import { useState } from "react";
 import { getUsuarioAtual } from "../services/api";
 
@@ -27,23 +28,22 @@ export function Menu() {
   }
 
   return (
-    <header className="bg-white border-b border-slate-200 sticky top-0 z-10">
-      <div className="h-1 w-full bg-gradient-to-r from-blue-700 via-blue-600 to-red-600" />
+    <header className="sticky top-0 z-10 border-b border-biblioteca-line bg-white/95 shadow-sm backdrop-blur">
+      <div className="brand-strip h-1" />
 
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between">
+      <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 sm:px-6">
         <button
           onClick={() => navigate(usuario?.perfil === "ADMIN" ? "/inicio-adm" : "/inicio")}
           className="flex items-center gap-3"
         >
-          <div className="w-10 h-10 rounded-lg bg-blue-50 border border-blue-100 flex items-center justify-center">
-            <Building2 className="w-5 h-5 text-blue-600" strokeWidth={1.75} />
-            {/* Substitua este bloco pela tag <img src="..." /> da logo */}
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-biblioteca-line bg-white shadow-sm">
+            <img src={Logo} alt="Logo SENAI/SESI" className="h-7 w-7 object-contain" />
           </div>
           <div className="text-left hidden sm:block">
-            <p className="text-sm font-semibold text-slate-900 leading-tight">
+            <p className="text-sm font-extrabold leading-tight text-biblioteca-primaryDark">
               Biblioteca SENAI / SESI
             </p>
-            <p className="text-xs text-slate-500 leading-tight">
+            <p className="text-xs leading-tight text-biblioteca-muted">
               Agendamento de salas e computadores
             </p>
           </div>
@@ -58,7 +58,7 @@ export function Menu() {
               className={[
                 "px-4 py-2 rounded-lg text-sm font-medium transition-colors",
                 location.pathname === link.to
-                  ? "bg-blue-50 text-blue-700"
+                  ? "bg-blue-50 text-biblioteca-primary"
                   : "text-slate-600 hover:bg-slate-50 hover:text-slate-900",
               ].join(" ")}
             >
@@ -105,7 +105,7 @@ export function Menu() {
               className={[
                 "block w-full text-left px-3 py-2.5 rounded-lg text-sm font-medium transition-colors",
                 location.pathname === link.to
-                  ? "bg-blue-50 text-blue-700"
+                  ? "bg-blue-50 text-biblioteca-primary"
                   : "text-slate-600 hover:bg-slate-50",
               ].join(" ")}
             >
