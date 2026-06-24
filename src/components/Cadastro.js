@@ -300,9 +300,8 @@ export function Cadastro() {
         <div className="w-full max-w-2xl">
           {/* Cabeçalho com espaço para logo */}
           <div className="flex flex-col items-center mb-8">
-            <div className="w-20 h-20 rounded-xl bg-white border-2 border-dashed border-blue-200 flex items-center justify-center mb-4">
-              <img src={Logo} alt="Logo SENAI/SESI" className="w-12 h-12 object-contain" />
-              {/* Substitua este bloco pela tag <img src="..." /> da logo */}
+            <div className="w-20 h-20 rounded-2xl bg-white border border-blue-100 shadow-xl shadow-slate-200/60 flex items-center justify-center mb-4">
+              <img src={Logo} alt="Logo SENAI/SESI" className="w-14 h-14 object-contain" />
             </div>
             <h1 className="text-2xl font-semibold text-slate-900 tracking-tight">
               Biblioteca SENAI / SESI
